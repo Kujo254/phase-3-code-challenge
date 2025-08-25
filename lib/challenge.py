@@ -9,7 +9,11 @@ class Author:
         """Associate a book with this author."""
         if book not in self.books:
             self.books.append(book)
-            book.author = self  # set the book's author reference
+            book.author = self
+
+    def book_count(self):
+        """Return how many books this author has written."""
+        return len(self.books)
 
 
 class Book:
@@ -19,9 +23,9 @@ class Book:
         self.publisher = None
 
         if author:
-            author.add_book(self)   # link to author if passed
+            author.add_book(self)
         if publisher:
-            publisher.publish_book(self)  # link to publisher if passed
+            publisher.publish_book(self)
 
 
 class Publisher:
@@ -33,4 +37,12 @@ class Publisher:
         """Associate a book with this publisher."""
         if book not in self.books:
             self.books.append(book)
-            book.publisher = self  # set the book's publisher reference
+            book.publisher = self
+
+    def book_count(self):
+        """Return how many books this publisher has published."""
+        return len(self.books)
+
+    def authors(self):
+        """Return a set of unique authors who published with this publisher."""
+        return {book.author for book in self.books if book.author}
